@@ -58,3 +58,26 @@ export const getAdjecentPositions = ([x, y]: Pos) => {
     [x, y - 1],
   ] as Pos[]
 }
+
+export function intersect<T extends number[] | string[] | string>(
+  A: T,
+  B: T,
+): T {
+  const setB = new Set([...B])
+  const intersection = [
+    ...new Set([...A].filter((element) => setB.has(element))),
+  ]
+  if (typeof A === "string" && typeof B === "string")
+    return (intersection as any).join("")
+  return intersection as T
+}
+
+export function chunked<T>(l: T[], chunkSize: number) {
+  const result: T[][] = []
+  const copy = l.slice()
+  while (copy.length > 0) {
+    result.push(copy.splice(0, chunkSize))
+  }
+
+  return result
+}
