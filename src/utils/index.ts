@@ -50,13 +50,25 @@ export const isInBounds = (grid: number[][]) => (pos: Pos) =>
   !isOutOfBounds(pos, grid)
 
 // No diagonal
-export const getAdjecentPositions = ([x, y]: Pos) => {
+export const getAdjecentPositions = ([x, y]: Pos): Pos[] => {
   return [
     [x + 1, y],
     [x, y + 1],
     [x - 1, y],
     [x, y - 1],
-  ] as Pos[]
+  ]
+}
+
+export const getAdjecentLines = (
+  [x, y]: Pos,
+  [[minX, minY], [maxX, maxY]]: [Pos, Pos],
+): Pos[][] => {
+  return [
+    new Array(maxX - x).fill(0).map((_, i) => [x + i + 1, y]),
+    new Array(maxY - y).fill(0).map((_, i) => [x, y + i + 1]),
+    new Array(x - minX).fill(0).map((_, i) => [x - i - 1, y]),
+    new Array(y - minY).fill(0).map((_, i) => [x, y - i - 1]),
+  ]
 }
 
 export function intersect<T extends number[] | string[] | string>(
